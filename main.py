@@ -33,7 +33,6 @@ class App(Frame):
         self.foodExists = False
         self.foodVector = []
         self.currentDir = [1, 0] # 2D Vector [X, Y]
-        self.acceptableKeys = ["w", "a", "s", "d"]
         self.keys = {"w": [0, -1], "s": [0, 1], "a": [-1, 0], "d": [1, 0]}
         self.collisionVector = []
         self.callgameupdate()
@@ -77,11 +76,11 @@ class App(Frame):
             self.genfood()
             if event:
                 key = event.char.lower()
-                if key in self.acceptableKeys and self.continueUpdating:
-                    for index, char in enumerate(self.keys):
+                if key in self.keys.keys() and self.continueUpdating:
+                    for char, value in self.keys.items():
                         if key == char:
-                            if self.currentDir != [-self.keys[char][0], -self.keys[char][1]]:
-                                self.currentDir = self.keys[char]
+                            if self.currentDir != [-x for x in value]:
+                                self.currentDir = value
             self.snake.move(self.currentDir)
             if [self.snake.head[0], self.snake.head[1]] == [self.foodVector[0], self.foodVector[1]]:
                 self.snake.grow(self.currentDir)
